@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>School Tracker - PLANO DE ABANDONO</title>
+    <link rel="stylesheet" href="style_emergencia.css">
+    <link rel="icon" href="favicon_avelino.ico" type="image/x-icon">
+    <style>
+    /* Cabeçalho de Impressão (escondido na tela) */
+    .print-header { display: none; }
+
+    @media print {
+        /* Esconde tudo o que não é relatório */
+        body { background: white !important; color: black !important; padding: 0; }
+        footer, .stats-container, #cronometro, h1, .alert-box { display: none !important; }
+       
+        /* Mostra o cabeçalho e estiliza o conteúdo */
+        .print-header {
+            display: block !important;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
+            color: black;
+        }
+
+        .report-summary {
+            color: black !important;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        /* Rodapé com assinatura (igual ao seu outro relatório) */
+        body::after {
+            content: "\A\A __________________________________________\A Assinatura do Responsável (Ciente)";
+            display: block;
+            text-align: center;
+            margin-top: 80px;
+            white-space: pre;
+            font-weight: bold;
+            color: black;
+        }
+    }
+</style>
+
+<!-- Estrutura do Relatório que será preenchida pelo JS -->
+<div class="print-header">
+    <h1>SISTEMA DE MONITORAMENTO ESCOLAR</h1>
+    <h3>RELATÓRIO OFICIAL DE PROTOCOLO DE ABANDONO</h3>
+    <p>Emissão: <span id="data-relatorio"></span></p>
+</div>
+<div id="conteudo-impressao" class="report-summary"></div>
+</head>
+<body class="emergency-mode">
+
+    <header>
+        <h1>🚨 PROTOCOLO DE ABANDONO EM CURSO</h1>
+        <div id="cronometro">00:00:00</div>
+    </header>
+
+    <main class="dashboard">
+        <!-- Card 1: Total de Alunos no Prédio -->
+        <div class="card">
+            <h3>TOTAL NO TURNO</h3>
+            <p id="total-presentes">0</p>
+        </div>
+
+        <!-- Card 2: Alunos já Seguros na Quadra -->
+        <div class="card safe">
+            <h3>SEGUROS NA QUADRA</h3>
+            <p id="total-seguros">0</p>
+        </div>
+
+        <!-- Card 3: Alunos ainda no Prédio -->
+        <div class="card danger">
+            <h3>PENDENTES</h3>
+            <p id="total-pendentes">0</p>
+        </div>
+    </main>
+
+    <section class="lista-ausentes">
+        <h2>ESTUDANTES NÃO LOCALIZADOS:</h2>
+        <ul id="lista-nomes-pendentes">
+            <!-- Nomes aparecem aqui via JS -->
+        </ul>
+    </section>
+
+    <footer>
+        <button id="btn-stop" disabled>CONCLUIR E GERAR RELATÓRIO</button>
+        <button id="btn-voltar" onclick="voltarNormalidade()">VOLTAR À NORMALIDADE</button>
+    </footer>
+<script type="module">
+if (sessionStorage.getItem('logado') !== 'true') {
+    window.location.replace("index.html");
+}
+    </script>
+<script type="module" src="emergencia.js"></script>
+</body>
+</html>
