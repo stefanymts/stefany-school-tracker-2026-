@@ -13,13 +13,19 @@
     box-sizing: border-box;
 }
 
+.neon-blue {
+    color: #00d4ff;
+    text-shadow: 0 0 5px rgba(0, 212, 255, 0.7);
+    font-style: italic;
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
     font-family: 'Inter', -apple-system, sans-serif;
     margin: 0;
     height: 100vh;
-    overflow: hidden; /* Mantém o painel fixo na tela */
+    overflow: hidden; /* Mantém o painel fixo no PC */
 }
 
 .dashboard-container {
@@ -30,15 +36,39 @@ body {
     gap: 20px;
 }
 
-/* Barra Superior de Estatísticas */
+/* Barra Superior de Estatísticas (PC) */
 .stats-bar {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background: var(--card-bg);
-    padding: 20px;
+    padding: 10px 20px;
     border-radius: 15px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    height: auto;
+}
+
+/* Grupo de Botões (PC) */
+.nav-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: auto;
+    max-width: 320px;
+}
+
+/* Padronização Unificada de Todos os Botões no PC (incluindo ABANDONO) */
+.nav-group button,
+.nav-group .btn-emergencia {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+    font-weight: bold !important;
+    height: 32px !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
 }
 
 .stat-item {
@@ -117,7 +147,7 @@ body {
     font-size: 1.1rem;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Corta o nome se for muito longo para não quebrar o layout */
+    text-overflow: ellipsis;
 }
 
 .turma-tag {
@@ -163,6 +193,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
 }
 
 .no-students {
@@ -197,27 +228,72 @@ body {
     border-radius: 10px;
 }
 
-/* AJUSTES PARA DISPOSITIVOS MÓVEIS (CELULARES) */
+/* ==========================================================================
+   AJUSTES PARA DISPOSITIVOS MÓVEIS (CELULARES)
+   ========================================================================== */
 @media (max-width: 768px) {
-    body {
+    /* Destrava a rolagem VERTICAL no celular */
+    html, body {
         padding: 10px;
-        overflow-y: auto; /* Permite rolar no celular se o conteúdo for longo */
+        width: 100%;
+        height: auto !important;
+        min-height: 100% !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
     }
 
-    /* Força o empilhamento do Telão */
+    .dashboard-container {
+        height: auto !important;
+        padding: 0 !important;
+    }
+
+    /* Empilha o cabeçalho no celular */
     .stats-bar {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: column !important;
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+        padding: 12px !important;
+        gap: 12px !important;
+    }
+
+    .nav-group {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Botões ajustados no celular */
+    .nav-group button,
+    .nav-group .btn-emergencia {
+        font-size: 0.65rem !important;
+        padding: 6px 4px !important;
+        width: 100% !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Carrossel de Turmas no celular */
+    .cards-grid, .turmas-container, .classes-row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
     }
 
     .main-content {
-        flex-direction: column;
-        height: auto;
+        flex-direction: column !important;
+        height: auto !important;
     }
 
     .monitor-section, .analytics-side {
         width: 100% !important;
-        flex: none;
+        flex: none !important;
+        height: auto !important;
     }
 
     /* Ajustes para o Scanner no Celular */
@@ -226,7 +302,7 @@ body {
         padding: 15px;
     }
 
-    select, button {
+    select, .controls button {
         height: 55px !important;
         font-size: 1.1rem !important;
     }
